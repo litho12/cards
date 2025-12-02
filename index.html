@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Cards Collection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@300;400;700&display=swap');
+
+        :root {
+            --primary: #8e6e54; /* Earthy Gold/Brown */
+            --secondary: #f9f5f0; /* Off-white background */
+            --text: #2c2c2c;
+            --gold: #d4af37;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--secondary);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Gallery Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* Card Design */
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-img {
+            height: 300px;
+            width: 100%;
+            overflow: hidden;
+            background: #f0f0f0;
+            position: relative;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.05);
+        }
+
+        .card-details {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .card-price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-enquire {
+            background: var(--text);
+            color: white;
+            border: none;
+            padding: 10px 0;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+        }
+
+        .btn-enquire:hover {
+            background: var(--primary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            display: block;
+            padding: 12px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+
+        .loader {
+            text-align: center;
+            grid-column: 1/-1;
+            padding: 3rem;
+            color: #999;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Elegant Invites</h1>
+        <p>A Collection of Timeless Wedding Cards</p>
+    </header>
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterSelection('all')">All</button>
+        <button class="filter-btn" onclick="filterSelection('luxury')">Luxury</button>
+        <button class="filter-btn" onclick="filterSelection('traditional')">Traditional</button>
+        <button class="filter-btn" onclick="filterSelection('modern')">Modern</button>
+    </div>
+
+    <div class="container">
+        <div id="gallery" class="grid">
+            <div class="loader">Loading latest collection...</div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 10px;">Enquire Now</h3>
+            <div id="modal-card-details"></div>
+            <a id="wa-link" href="#" target="_blank" class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 🔧 SETTINGS: EDIT YOUR REPO DETAILS HERE
+        // ==========================================
+        const CONFIG = {
+            owner: "litho12", // Apna GitHub username daalein
+            repo: "cards",       // Apne Repo ka naam daalein
+            branch: "main"                // 'main' or 'master'
+        };
+        // ==========================================
+
+
+        let allCards = [];
+
+        document.addEventListener('DOMContentLoaded', fetchCards);
+
+        async function fetchCards() {
+            const gallery = document.getElementById('gallery');
+            
+            // Check if user has configured the file
+            if(CONFIG.owner === "litho12") {
+                gallery.innerHTML = `<div class="loader" style="color:red;">
+                    ⚠️ Please edit index.html and add your GitHub Username and Repo Name in the script section.
+                </div>`;
+                return;
+            }
+
+            try {
+                // Fetching from raw.githubusercontent.com - No Token Needed for Public Repos
+                const url = `https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/cards.json?t=${new Date().getTime()}`;
+                
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Repository not found or empty.");
+                
+                allCards = await response.json();
+                renderCards(allCards);
+
+            } catch (error) {
+                console.error(error);
+                gallery.innerHTML = `<div class="loader">
+                    No cards found yet.<br>
+                    <small style="font-size: 0.8rem;">(Admin: Please add cards using admin.html)</small>
+                </div>`;
+            }
+        }
+
+        function renderCards(cards) {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+
+            if (cards.length === 0) {
+                gallery.innerHTML = '<div class="loader">No cards in this category.</div>';
+                return;
+            }
+
+            cards.forEach(card => {
+                const el = document.createElement('div');
+                el.className = 'card';
+                el.innerHTML = `
+                    <div class="card-img">
+                        <img src="${card.image}" alt="${card.name}" onerror="this.src='https://placehold.co/400x600?text=Image+Unavailable'">
+                    </div>
+                    <div class="card-details">
+                        <h3 class="card-name">${card.name}</h3>
+                        <div class="card-price">₹${card.price}</div>
+                        <button class="btn-enquire" onclick="openModal('${card.name}', '${card.price}')">View Details</button>
+                    </div>
+                `;
+                gallery.appendChild(el);
+            });
+        }
+
+        function filterSelection(category) {
+            // Update UI
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter Data
+            if (category === 'all') {
+                renderCards(allCards);
+            } else {
+                const filtered = allCards.filter(card => card.category === category);
+                renderCards(filtered);
+            }
+        }
+
+        // Modal Functions
+        function openModal(name, price) {
+            const modal = document.getElementById('modal');
+            const details = document.getElementById('modal-card-details');
+            const waLink = document.getElementById('wa-link');
+
+            // Set content
+            details.innerHTML = `<p>I am interested in: <strong>${name}</strong></p><p>Price: ₹${price}</p>`;
+            
+            // WhatsApp Link
+            const phone = ""; // Add your phone number like "919999999999"
+            const text = `Hi, I want to order: ${name} (₹${price}). Is it available?`;
+            waLink.href = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('modal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
